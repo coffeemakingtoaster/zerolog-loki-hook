@@ -15,6 +15,8 @@ func init() {
 		PushIntveralSeconds: 10,  // Threshhold of 10s
 		MaxBatchSize:        500, //Threshold of 500 events
 		LokiEndpoint:        "http://localhost:3100",
+		BatchCount:          0,
+		Values:              make(map[string][][]string),
 	}
 
 	go lokiClient.bgRun()
@@ -33,5 +35,6 @@ type LokiHook struct {
 }
 
 func (h LokiHook) Run(e *zerolog.Event, level zerolog.Level, msg string) {
-	lokiClient.Values = append(lokiClient.Values, []string{strconv.FormatInt(time.Now().UnixNano(), 10), msg})
+	lokiClient.Values[level.String()] = append(lokiClient.Values[level.String()], []string{strconv.FormatInt(time.Now().UnixNano(), 10), msg})
+	lokiClient.BatchCount++
 }
