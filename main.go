@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"strconv"
 	"time"
 
@@ -11,10 +12,14 @@ import (
 var lokiClient LokiClient
 
 func init() {
+	lokiport := os.Getenv("LOKI_ENDPOINT")
+	if lokiport == "" {
+		lokiport = "http://localhost:3100"
+	}
 	lokiClient = LokiClient{
 		PushIntveralSeconds: 10,  // Threshhold of 10s
 		MaxBatchSize:        500, //Threshold of 500 events
-		LokiEndpoint:        "http://localhost:3100",
+		LokiEndpoint:        lokiport,
 		BatchCount:          0,
 		Values:              make(map[string][][]string),
 	}

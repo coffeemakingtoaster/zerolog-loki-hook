@@ -1,0 +1,13 @@
+services: 
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+
+  example:
+    build: .
+    environment:
+      LOKI_ENDPOINT: "http://loki:3100"
+    links:
+      - loki:loki
+
