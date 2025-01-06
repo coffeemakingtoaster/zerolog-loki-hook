@@ -1,5 +1,9 @@
 # Zerolog Loki hook
 
+  ⚠️If you want an actual solution to this problem I have created a [library](https://github.com/coffeemakingtoaster/zerolog-loki-publisher) that does this :) It fixes a few issues this implementation has⚠️
+
+---
+
 Example for a hook that forwards log events from zerolog to you trusty local Loki instance.
 
 For usage checkout the main.go file. To test the setup run 
